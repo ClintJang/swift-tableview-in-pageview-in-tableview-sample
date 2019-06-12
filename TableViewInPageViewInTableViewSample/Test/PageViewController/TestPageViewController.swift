@@ -9,7 +9,37 @@
 import UIKit
 
 final class TestPageViewController: UIPageViewController {
-    private lazy var pages = [UIViewController]()
+    private lazy var pages: [UIViewController] = {
+        // ETC Controllers
+        var pages: [UIViewController] = Constants.pageCounts.map { number in
+            let labelString = "Page \(number)"
+            let controller = UIViewController()
+            controller.title = labelString
+            // Background Color
+            controller.view.backgroundColor = number % 2 == 0 ? #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1) : #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
+            
+            // Add Label
+            let label = UILabel()
+            label.text = labelString
+            label.textAlignment = NSTextAlignment.center
+            label.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+            label.font = UIFont.systemFont(ofSize: 32)
+            controller.view.addSubview(label)
+            
+            label.translatesAutoresizingMaskIntoConstraints = false
+            label.topAnchor.constraint(equalTo: controller.view.topAnchor).isActive = true
+            label.widthAnchor.constraint(equalTo: controller.view.widthAnchor).isActive = true
+            label.heightAnchor.constraint(equalTo: controller.view.heightAnchor).isActive = true
+            label.leadingAnchor.constraint(equalTo: controller.view.leadingAnchor).isActive = true
+            
+            return controller
+        }
+        // For Test Second TableView
+        pages.insert(storyboard?.instantiateViewController(withIdentifier: "TestAViewViewController") as! TestAViewViewController, at: 0)
+        pages.insert(storyboard?.instantiateViewController(withIdentifier: "TestBViewViewController") as! TestBViewViewController, at: 1)
+        
+        return pages
+    }()
     
     enum Constants { static let pageCounts = 3...5 }
     
@@ -29,34 +59,6 @@ private extension TestPageViewController {
         // Setting Delegate
         dataSource = self
         delegate = self
-        
-        // ETC Controllers
-        pages = Constants.pageCounts.map { number in
-            let labelString = "Page \(number)"
-            let controller = UIViewController()
-            controller.title = labelString
-            // Background Color
-            controller.view.backgroundColor = number % 2 == 0 ? #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1) : #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
-            
-            // Add Label
-            let label = UILabel()
-            label.text = labelString
-            label.textAlignment = NSTextAlignment.center
-            label.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-            label.font = UIFont.systemFont(ofSize: 32)
-            controller.view.addSubview(label)
-            
-            label.translatesAutoresizingMaskIntoConstraints = false
-            controller.view.topAnchor.constraint(equalTo: label.topAnchor).isActive = true
-            controller.view.widthAnchor.constraint(equalTo: label.widthAnchor).isActive = true
-            controller.view.heightAnchor.constraint(equalTo: label.heightAnchor).isActive = true
-            controller.view.leadingAnchor.constraint(equalTo: label.leadingAnchor).isActive = true
-            
-            return controller
-        }
-        // For Test Second TableView
-        pages.insert(storyboard?.instantiateViewController(withIdentifier: "TestAViewViewController") as! TestAViewViewController, at: 0)
-        pages.insert(storyboard?.instantiateViewController(withIdentifier: "TestBViewViewController") as! TestBViewViewController, at: 1)
 
         setViewControllers([pages[0]], direction: UIPageViewController.NavigationDirection.forward, animated: false) { _ in }
     }

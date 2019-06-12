@@ -68,13 +68,13 @@ extension TestAViewViewController: UITableViewDelegate {
         }
 
         let gap: CGFloat =  yOffset - beforeYOffset
+        var reviseGap = tableView.contentOffset.y + gap
+        if reviseGap > Constants.maxFirstTableViewContentOffsetY { reviseGap = Constants.maxFirstTableViewContentOffsetY }
+        else if reviseGap < Constants.minFirstTableViewContentOffsetY { reviseGap = Constants.minFirstTableViewContentOffsetY }
+        
         if gap > 0 {
-            var reviseGap = tableView.contentOffset.y + gap
-            if reviseGap > Constants.maxFirstTableViewContentOffsetY { reviseGap = Constants.maxFirstTableViewContentOffsetY }
             if tableView.contentOffset.y < Constants.maxFirstTableViewContentOffsetY { tableView.contentOffset.y = reviseGap }
         } else {
-            var reviseGap = tableView.contentOffset.y + gap
-            if reviseGap < Constants.minFirstTableViewContentOffsetY { reviseGap = Constants.minFirstTableViewContentOffsetY }
             if tableView.contentOffset.y > Constants.minFirstTableViewContentOffsetY { tableView.contentOffset.y = reviseGap }
         }
         beforeYOffset = yOffset

@@ -69,10 +69,10 @@ extension ViewController: UITableViewDataSource {
                 cell.pageViewController?.didMove(toParent: self)
                 
                 cell.pageViewController?.view.translatesAutoresizingMaskIntoConstraints = false
-                cell.contentView.topAnchor.constraint(equalTo: pageViewController.view.topAnchor).isActive = true
-                cell.contentView.widthAnchor.constraint(equalTo: pageViewController.view.widthAnchor).isActive = true
-                cell.contentView.heightAnchor.constraint(equalTo: pageViewController.view.heightAnchor).isActive = true
-                cell.contentView.leadingAnchor.constraint(equalTo: pageViewController.view.leadingAnchor).isActive = true
+                pageViewController.view.topAnchor.constraint(equalTo: cell.contentView.topAnchor).isActive = true
+                pageViewController.view.widthAnchor.constraint(equalTo: cell.contentView.widthAnchor).isActive = true
+                pageViewController.view.heightAnchor.constraint(equalTo: cell.contentView.heightAnchor).isActive = true
+                pageViewController.view.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor).isActive = true
             }
             return cell
         } else  {
